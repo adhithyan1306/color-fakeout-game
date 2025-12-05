@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Color Fake-Out Reflex • Normal</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: #0f0f19;
+      color: #f5f5f5;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      width: 1100px;
+      height: 620px;
+      background: #151525;
+      border-radius: 18px;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+      display: grid;
+      grid-template-columns: 2.2fr 1fr;
+      overflow: hidden;
+    }
+
+    .main {
+      padding: 24px 32px;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      font-size: 14px;
+      color: #c5c5dd;
+    }
+
+    .tag {
+      background: #23233b;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      border: 1px solid #2f2f4a;
+    }
+
+    .info-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .label {
+      color: #8f8fbb;
+      font-size: 13px;
+    }
+
+    .value {
+      font-weight: 600;
+      color: #f5f5ff;
+      font-size: 15px;
+    }
+
+    .change-btn {
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid #3b3b66;
+      background: #1e1e36;
+      color: #d5d5ff;
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    .change-btn:hover {
+      background: #252544;
+    }
+
+    .mode-label {
+      font-size: 13px;
+      color: #a5a5dd;
+      margin-left: 16px;
+    }
+
+    .game-panel {
+      flex: 1;
+      border-radius: 16px;
+      background: radial-gradient(circle at top, #252547, #151525);
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      text-align: center;
+      padding: 16px;
+    }
+
+    .title {
+      font-size: 26px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: #a7a7d8;
+      margin-bottom: 18px;
+      max-width: 520px;
+    }
+
+    .big-word {
+      font-size: 80px;
+      font-weight: 900;
+      letter-spacing: 4px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      text-shadow: 0 0 18px rgba(0, 0, 0, 0.7);
+      min-height: 96px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .message-main {
+      font-size: 20px;
+      margin-top: 10px;
+      min-height: 28px;
+    }
+
+    .message-sub {
+      font-size: 14px;
+      color: #b5b5df;
+      margin-top: 8px;
+      min-height: 22px;
+    }
+
+    .footer-hint {
+      position: absolute;
+      bottom: 14px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 13px;
+      color: #8383b3;
+    }
+
+    .sidebar {
+      background: #101020;
+      border-left: 1px solid #232344;
+      padding: 20px 18px;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .sidebar h2 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .sidebar p {
+      font-size: 13px;
+      color: #b0b0d5;
+      margin-bottom: 16px;
+    }
+
+    .leaderboard {
+      margin-top: 8px;
+      margin-bottom: 10px;
+    }
+
+    .lb-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 8px;
+      border-radius: 8px;
+      font-size: 13px;
+      margin-bottom: 4px;
+      background: #181830;
+      border: 1px solid #24244a;
+    }
+
+    .lb-row span:nth-child(1) {
+      width: 18px;
+      color: #8e8edf;
+    }
+
+    .lb-row span:nth-child(2) {
+      flex: 1;
+      margin-left: 4px;
+      color: #f5f5ff;
+    }
+
+    .lb-row span:nth-child(3) {
+      font-weight: 600;
+      color: #d9ff9c;
+    }
+
+    .name-input {
+      margin-top: 8px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .name-input input {
+      flex: 1;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid #32325b;
+      background: #17172a;
+      color: #f5f5ff;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .name-input button {
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: none;
+      background: #4f46e5;
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .name-input button:hover {
+      background: #4338ca;
+    }
+
+    .hint-box {
+      margin-top: 10px;
+      font-size: 12px;
+      color: #8f8fbb;
+      line-height: 1.4;
+    }
+
+    .pill {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 2px 8px;
+      background: #232344;
+      margin-right: 4px;
+      font-size: 11px;
+    }
+
+    .score-comment {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #b2f5ea;
+    }
+
+    .kbd {
+      display: inline-block;
+      padding: 1px 5px;
+      border-radius: 4px;
+      border: 1px solid #3c3c68;
+      font-size: 11px;
+      margin: 0 2px;
+      background: #191932;
+      color: #e5e5ff;
+    }
+
+    .back-link {
+      font-size: 11px;
+      color: #9ca3ff;
+      margin-top: 8px;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="main">
+    <div class="top-bar">
+      <div class="info-row">
+        <div class="tag">Color Fake-Out Reflex</div>
+        <div class="mode-label">Mode: Normal · 20 rounds · 10 colors</div>
+      </div>
+      <div class="info-row">
+        <div class="label">Player:</div>
+        <div class="value" id="playerNameDisplay">---</div>
+        <button class="change-btn" id="changePlayerBtn">Change</button>
+        <div class="label" style="margin-left:16px;">Score:</div>
+        <div class="value" id="scoreDisplay">0</div>
+        <div class="label" style="margin-left:16px;">Round:</div>
+        <div class="value" id="roundDisplay">0 / 20</div>
+      </div>
+    </div>
+
+    <div class="game-panel">
+      <div class="title" id="titleText">Enter your name to start (Normal)</div>
+      <div class="subtitle" id="subtitleText">
+        Press SPACE only when the word and its color actually MATCH. Normal mode is the balanced, default difficulty.
+      </div>
+
+      <div class="big-word" id="bigWord"></div>
+
+      <div class="message-main" id="messageMain"></div>
+      <div class="message-sub" id="messageSub"></div>
+
+      <div class="footer-hint">
+        Use <span class="kbd">SPACE</span> to react • <span class="kbd">ESC</span> to reset run •
+        <span class="kbd">N</span> for new player • <a href="index.html" class="back-link">Back to modes</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="sidebar">
+    <div>
+      <h2>Normal mode leaderboard</h2>
+      <p>Top 5 scores on this browser for Normal mode. This uses the standard scoring and timing we built first.</p>
+
+      <div class="leaderboard" id="leaderboard"></div>
+
+      <div class="name-input" id="nameInputRow">
+        <input type="text" id="nameInput" placeholder="Enter your name">
+        <button id="nameButton">OK</button>
+      </div>
+
+      <div class="hint-box">
+        <div><span class="pill">RULE</span> Press <span class="kbd">SPACE</span> only when the word and font color match.</div>
+        <div>• This mode uses 10 colors and a 1250 ms reaction window.</div>
+        <div>• Balanced number of real matches and fakes.</div>
+        <br>
+        <div><span class="pill">SCORING (NORMAL)</span></div>
+        <div>✔ Correct press on MATCH → faster = more points (min 100)</div>
+        <div>✔ Ignore a fake → +250</div>
+        <div>✖ Wrong press on fake → −500</div>
+        <div>✖ Too early → −300</div>
+        <div>✖ Missed real match → −400</div>
+        <div class="score-comment" id="scoreComment"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ------- CONFIG FOR NORMAL MODE -------
+  const STORAGE_KEY = "cfr_normal_leaderboard_v1";
+
+  const ROUNDS_TOTAL = 20;
+  const MAX_RT = 1250;          // max reaction window in ms
+  const DELAY_MIN = 800;        // ms before word appears
+  const DELAY_MAX = 1700;
+
+  const MATCH_PROB = 0.55;      // chance of a real match
+  const MAX_FAKE_STREAK = 3;    // avoid too many fakes in a row
+
+  const COLORS = {
+    RED:    "#dc3c3c",
+    GREEN:  "#3acb69",
+    BLUE:   "#4c7dff",
+    YELLOW: "#f1d24a",
+    ORANGE: "#fb923c",
+    CYAN:   "#22d3ee",
+    PINK:   "#f472b6",
+    PURPLE: "#a855f7",
+    TEAL:   "#14b8a6",
+    LIME:   "#84cc16"
+  };
+  const COLOR_NAMES = Object.keys(COLORS);
+
+  // STATES
+  const STATE_ENTER_NAME = "enter_name";
+  const STATE_READY      = "ready";
+  const STATE_WAIT       = "wait";
+  const STATE_STIMULUS   = "stimulus";
+  const STATE_RESULT     = "result";
+  const STATE_GAME_OVER  = "game_over";
+
+  let state = STATE_ENTER_NAME;
+
+  // GAME VARIABLES
+  let playerName = "";
+  let roundIndex = 0;
+  let score = 0;
+
+  let waitStartTime = null;
+  let waitDelayMs = 0;
+  let stimulusTime = null;
+  let hasResponded = false;
+
+  let isMatch = false;
+  let wordText = "";
+  let wordColorName = "";
+  let resultShowStart = null;
+
+  let fakeStreak = 0;
+
+  let leaderboard = []; // { name, score }
+
+  // DOM ELEMENTS
+  const playerNameDisplay = document.getElementById("playerNameDisplay");
+  const scoreDisplay = document.getElementById("scoreDisplay");
+  const roundDisplay = document.getElementById("roundDisplay");
+
+  const titleText = document.getElementById("titleText");
+  const subtitleText = document.getElementById("subtitleText");
+  const bigWord = document.getElementById("bigWord");
+  const messageMain = document.getElementById("messageMain");
+  const messageSub = document.getElementById("messageSub");
+  const leaderboardDiv = document.getElementById("leaderboard");
+
+  const nameInputRow = document.getElementById("nameInputRow");
+  const nameInput = document.getElementById("nameInput");
+  const nameButton = document.getElementById("nameButton");
+  const scoreComment = document.getElementById("scoreComment");
+  const changePlayerBtn = document.getElementById("changePlayerBtn");
+
+  function randomChoice(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+
+  function saveLeaderboard() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(leaderboard));
+    } catch (e) {
+      // ignore storage errors
+    }
+  }
+
+  function loadLeaderboard() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) leaderboard = parsed;
+      }
+    } catch (e) {
+      leaderboard = [];
+    }
+  }
+
+  function setState(newState) {
+    state = newState;
+    render();
+  }
+
+  function enterNameMode() {
+    state = STATE_ENTER_NAME;
+    roundIndex = 0;
+    score = 0;
+    waitStartTime = null;
+    stimulusTime = null;
+    hasResponded = false;
+    fakeStreak = 0;
+    messageMain.textContent = "";
+    messageSub.textContent = "";
+    bigWord.textContent = "";
+    render();
+  }
+
+  function startNewGame() {
+    roundIndex = 0;
+    score = 0;
+    fakeStreak = 0;
+    startNextRound();
+    render();
+  }
+
+  function decideMatchOrFake() {
+    if (fakeStreak >= MAX_FAKE_STREAK) {
+      isMatch = true;
+      fakeStreak = 0;
+      return;
+    }
+    isMatch = Math.random() < MATCH_PROB;
+    if (isMatch) fakeStreak = 0;
+    else fakeStreak++;
+  }
+
+  function startNextRound() {
+    if (roundIndex >= ROUNDS_TOTAL) {
+      endGame();
+      return;
+    }
+
+    setState(STATE_WAIT);
+    hasResponded = false;
+    messageMain.textContent = "";
+    messageSub.textContent = "";
+    bigWord.textContent = "";
+
+    waitStartTime = performance.now();
+    waitDelayMs = DELAY_MIN + Math.random() * (DELAY_MAX - DELAY_MIN);
+
+    decideMatchOrFake();
+
+    wordText = randomChoice(COLOR_NAMES);
+
+    if (isMatch) {
+      wordColorName = wordText;
+    } else {
+      const others = COLOR_NAMES.filter(c => c !== wordText);
+      wordColorName = randomChoice(others);
+    }
+
+    stimulusTime = null;
+    resultShowStart = null;
+  }
+
+  function endGame() {
+    setState(STATE_GAME_OVER);
+    leaderboard.push({ name: playerName || "Player", score });
+    leaderboard.sort((a, b) => b.score - a.score);
+    leaderboard = leaderboard.slice(0, 5);
+    saveLeaderboard();
+    renderLeaderboard();
+    updateScoreComment();
+  }
+
+  function resetToReady() {
+    state = STATE_READY;
+    roundIndex = 0;
+    score = 0;
+    waitStartTime = null;
+    stimulusTime = null;
+    hasResponded = false;
+    fakeStreak = 0;
+    messageMain.textContent = "";
+    messageSub.textContent = "";
+    bigWord.textContent = "";
+    render();
+  }
+
+  function renderLeaderboard() {
+    leaderboardDiv.innerHTML = "";
+    if (leaderboard.length === 0) {
+      const p = document.createElement("div");
+      p.textContent = "No scores yet. Be the first.";
+      p.style.fontSize = "12px";
+      p.style.color = "#8f8fbb";
+      leaderboardDiv.appendChild(p);
+      return;
+    }
+
+    leaderboard.forEach((entry, index) => {
+      const row = document.createElement("div");
+      row.className = "lb-row";
+      const s1 = document.createElement("span");
+      const s2 = document.createElement("span");
+      const s3 = document.createElement("span");
+      s1.textContent = (index + 1) + ".";
+      s2.textContent = entry.name;
+      s3.textContent = entry.score;
+      row.appendChild(s1);
+      row.appendChild(s2);
+      row.appendChild(s3);
+      leaderboardDiv.appendChild(row);
+    });
+  }
+
+  function getCommentForScore(s) {
+    if (s >= 5000) return "Reflex demon. Try Hard or Ultimate.";
+    if (s >= 3500) return "Very strong performance.";
+    if (s >= 2200) return "Nice! Solid reactions.";
+    return "Good warm-up. You can push higher.";
+  }
+
+  function updateScoreComment() {
+    scoreComment.textContent = "Comment: " + getCommentForScore(score);
+  }
+
+  function handleSpacePress() {
+    const now = performance.now();
+
+    if (state === STATE_READY) {
+      startNewGame();
+      return;
+    }
+
+    if (state === STATE_WAIT) {
+      hasResponded = true;
+      score -= 300;
+      messageMain.textContent = randomChoice([
+        "Too early!",
+        "Jumped the gun.",
+        "You flinched before it appeared."
+      ]);
+      messageSub.textContent = "−300 pts (pressed before the word appeared)";
+      resultShowStart = now;
+      roundIndex++;
+      setState(STATE_RESULT);
+      return;
+    }
+
+    if (state === STATE_STIMULUS) {
+      if (hasResponded) return;
+      hasResponded = true;
+
+      if (isMatch) {
+        const rt = now - stimulusTime;
+        const ms = Math.floor(rt);
+        const points = Math.max(100, 1000 - ms);
+        score += points;
+        messageMain.textContent = randomChoice([
+          `Clean hit: ${ms} ms`,
+          `Nice snap: ${ms} ms`,
+          `Locked in: ${ms} ms`
+        ]);
+        messageSub.textContent = `+${points} pts`;
+      } else {
+        score -= 500;
+        messageMain.textContent = randomChoice([
+          "Baited by the fake.",
+          "Color lied, you believed.",
+          "Trap card activated."
+        ]);
+        messageSub.textContent = "−500 pts (should NOT press)";
+      }
+
+      roundIndex++;
+      resultShowStart = now;
+      setState(STATE_RESULT);
+      return;
+    }
+
+    if (state === STATE_GAME_OVER) {
+      resetToReady();
+      return;
+    }
+  }
+
+  function handleNoResponse() {
+    if (state !== STATE_STIMULUS || hasResponded) return;
+    const now = performance.now();
+    if (now - stimulusTime < MAX_RT) return;
+
+    hasResponded = true;
+    roundIndex++;
+
+    if (isMatch) {
+      score -= 400;
+      messageMain.textContent = randomChoice([
+        "Too slow!",
+        "You saw it… but late.",
+        "Match missed."
+      ]);
+      messageSub.textContent = "−400 pts (you missed a correct match)";
+    } else {
+      score += 250;
+      messageMain.textContent = randomChoice([
+        "No bait taken.",
+        "Calm and composed.",
+        "Nice ignore."
+      ]);
+      messageSub.textContent = "+250 pts";
+    }
+
+    resultShowStart = now;
+    setState(STATE_RESULT);
+  }
+
+  function updateWaitToStimulus() {
+    if (state !== STATE_WAIT) return;
+    const now = performance.now();
+    if (now - waitStartTime >= waitDelayMs) {
+      setState(STATE_STIMULUS);
+      stimulusTime = performance.now();
+      bigWord.textContent = wordText;
+      bigWord.style.color = COLORS[wordColorName];
+    }
+  }
+
+  function render() {
+    playerNameDisplay.textContent = playerName || "---";
+    scoreDisplay.textContent = score;
+    roundDisplay.textContent =
+      `${Math.min(roundIndex + (state === STATE_WAIT || state === STATE_STIMULUS ? 1 : 0), ROUNDS_TOTAL)} / ${ROUNDS_TOTAL}`;
+
+    if (state === STATE_ENTER_NAME) {
+      titleText.textContent = "Enter your name to start (Normal)";
+      subtitleText.textContent = "We’ll track your score on this device’s Normal-mode leaderboard.";
+      bigWord.textContent = "";
+      bigWord.style.color = "#f5f5ff";
+      messageMain.textContent = "";
+      messageSub.textContent = "Press OK or hit ENTER when done.";
+      nameInputRow.style.display = "flex";
+    } else {
+      nameInputRow.style.display = "none";
+    }
+
+    if (state === STATE_READY) {
+      titleText.textContent = "Normal mode: standard difficulty.";
+      subtitleText.textContent =
+        "Press SPACE when the word and its color MATCH. Do nothing on fakes. Scoring tuned for balanced play.";
+      bigWord.textContent = "";
+      bigWord.style.color = "#f5f5ff";
+      messageMain.textContent = "Press SPACE to start your run.";
+      messageSub.textContent = "";
+    }
+
+    if (state === STATE_WAIT) {
+      titleText.textContent = "Get ready…";
+      subtitleText.textContent = "Wait for the word. Press SPACE only on a TRUE match.";
+      bigWord.textContent = "";
+      bigWord.style.color = "#f5f5ff";
+    }
+
+    if (state === STATE_STIMULUS) {
+      titleText.textContent = "";
+      subtitleText.textContent = "Press SPACE if the WORD and its COLOR match.";
+    }
+
+    if (state === STATE_GAME_OVER) {
+      titleText.textContent = "Run complete! (Normal)";
+      subtitleText.textContent = "SPACE = play again • N = new player • Back to modes for other difficulties.";
+      bigWord.textContent = "";
+    }
+
+    renderLeaderboard();
+    updateScoreComment();
+  }
+
+  document.addEventListener("keydown", (e) => {
+    if (state === STATE_ENTER_NAME) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        confirmName();
+      }
+      return;
+    }
+
+    if (e.key === " ") {
+      e.preventDefault();
+      handleSpacePress();
+    }
+
+    if (e.key === "Escape") {
+      resetToReady();
+    }
+
+    if (e.key === "n" || e.key === "N") {
+      enterNameMode();
+    }
+  });
+
+  function confirmName() {
+    const val = nameInput.value.trim();
+    playerName = val || "Player";
+    nameInput.value = playerName;
+    setState(STATE_READY);
+  }
+
+  nameButton.addEventListener("click", confirmName);
+  nameInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      confirmName();
+    }
+  });
+
+  changePlayerBtn.addEventListener("click", enterNameMode);
+
+  function loop() {
+    if (state === STATE_WAIT) {
+      updateWaitToStimulus();
+    }
+    if (state === STATE_STIMULUS) {
+      handleNoResponse();
+    }
+    if (state === STATE_RESULT && resultShowStart !== null) {
+      const now = performance.now();
+      if (now - resultShowStart >= 1500) {
+        if (roundIndex < ROUNDS_TOTAL) {
+          startNextRound();
+        } else {
+          endGame();
+        }
+      }
+    }
+    requestAnimationFrame(loop);
+  }
+
+  // init
+  loadLeaderboard();
+  renderLeaderboard();
+  render();
+  loop();
+</script>
+</body>
+</html>
